@@ -1,0 +1,56 @@
+<ng-container>
+    <div class="row mt-2 mb-3">
+        <div class="col-md-3">
+            <app-export-excel [btnValue]="'Export questions to excel'" [exportList]="questions"></app-export-excel>
+        </div>
+        <div class="col-md-5">
+            <app-import-excel (fileList) = "fileListImported($event)"></app-import-excel>
+            <button class="btn btn-upload-excel btn-success" [hidden]="uploadBtnStatus" type="button" (click)="uploadFile()">Upload</button>
+        </div>
+        <div class="col-md-4">
+            <app-export-excel [btnValue]="'Download required template for upload'" [exportList]="questionTemplate"></app-export-excel>
+        </div>
+    </div>
+</ng-container>
+<hr>
+<div class="manage-area my-3" *ngIf="questions && questions.length > 0">
+    <div class="row header">
+        <div class="col-md-6">
+            <h2 class="main-head">Manage Questions</h2>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary float-right" [routerLink]="['/manage/questions/modify-question']"><i class="fa fa-plus"></i> Add Questions</button>
+        </div>
+    </div>
+    <hr>
+
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Question</th>
+                <th>Degree</th>
+                <th>Exam</th>
+                <th>Created at</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let question of questions">
+                <td>{{ question.id }}</td>
+                <td>{{ question.questionName.length > 20 ? question.questionName.substring(0, 20) + '...' : question.questionName }}</td>
+                <td>{{ question.degree }} marks</td>
+                <td>{{ question.exam.name.length > 20 ? question.exam.name.substring(0, 20) + '...' : question.exam.name }}</td>
+                <td> {{ question.createdAt | date }} </td>
+                <td>
+                    <button class="btn btn-info mr-2" [routerLink]="['/manage/questions/' + question.id]"><i class="fa fa-info"></i> Details</button>
+                    <button class="btn btn-danger" (click)="deleteQuestion(question.id)"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-container *ngIf="questions && questions.length == 0">
+    <app-no-content [contentName]="'questions'" [url]="'/manage/questions/modify-question'"></app-no-content>
+</ng-container>

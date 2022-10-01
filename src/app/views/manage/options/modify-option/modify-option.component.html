@@ -1,0 +1,43 @@
+<div class="modify-content my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <ng-container>
+                <alert type="danger" *ngIf="questions && questions.length == 0">
+                    <div class="text-center">
+                        <strong>! You should add questions first.</strong> <button class="btn btn-danger ml-5" [routerLink]="['/manage/questions/modify-question']">Create new question</button>
+                    </div>
+                </alert>
+                <div class="validiation">
+                    <div class="client-errors" *ngIf="modifyFormGroup.invalid && modifyFormGroup.touched">
+                        <p class="badge badge-pill badge-danger mx-2 p-3" *ngIf="hasError('optionName', 'required')">Option is required</p>
+                        <p class="badge badge-pill badge-danger mx-2 p-3" *ngIf="hasError('questionId', 'required')">Question is required</p>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{(optionId && optionId != 0) ? 'Update' : 'Create'}} Option</h3>
+                    <form [formGroup]="modifyFormGroup" (ngSubmit)="modifyFormGroup.valid && modifyFormSubmitted()">
+                        <div class="form-group">
+                            <label for="optionName">Option Name</label>
+                            <input type="text" id="optionName" class="form-control" formControlName="optionName" autocomplete="off">
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input formControlName="isCorrect" type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Is Correct</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="questionId">Question</label>
+                            <select class="form-control" id="questionId" formControlName="questionId">
+                                <option *ngFor="let question of questions" [value]="question.id">{{ question.questionName}}</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-block btn-primary" [disabled]="modifyFormGroup.invalid">Modify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

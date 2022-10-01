@@ -1,0 +1,45 @@
+<div class="exam-begin">
+    <div class="row justify-content-center my-5" *ngIf="examImplementation && examImplementation.length > 0">
+        <div class="col-md-9">
+            <ng-container *ngIf="errorsList && errorsList.length > 0">
+                <p class="badge badge-pill badge-danger mx-2 p-3">{{ errorsList }}</p>
+            </ng-container>
+            <div class="card" *ngIf="activeExamImplementation && activeExamImplementation.options.length>0">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">
+                        {{ activeExamImplementation.question.questionName }}
+                    </h3>
+                    <div class="list-group list-group-flush">
+                        <button type="button" (click)="optionSelected(activeExamImplementation.question, option)" *ngFor="let option of activeExamImplementation.options" class="list-group-item list-group-item-action">
+                            {{ option.optionName }}
+                            <ng-container *ngIf="activeExamImplementation.optionSelected != null && activeExamImplementation.optionSelected.id == option.id">
+                                <i class="fa fa-circle-check mt-1 float-right"></i>
+                            </ng-container>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button [disabled]="prevBtn" (click)="prevBtnClicked()" class="btn btn-info">Prev</button>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center" style="color: black;
+                            padding: 3px;
+                            font-weight: 900;
+                            letter-spacing: .3rem;
+                            font-size: 1rem;
+                            margin-top: 8px;">{{ counter }} : {{ counterSec }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <button [disabled]="finishBtn" [style]="finishBtn? 'display: none' : 'display: inline'"
+                            (click)="finishExam()" type="button" class="finishBtn float-right btn btn-secondary float-right">
+                            Finish Exam</button>
+                            <button [disabled]="nextBtn" [style]="finishBtn? 'display: inline' : 'display: none'" (click)="nextBtnClicked()" type="button" class="float-right btn btn-info float-right">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

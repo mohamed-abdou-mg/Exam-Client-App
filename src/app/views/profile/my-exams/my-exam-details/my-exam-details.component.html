@@ -1,0 +1,32 @@
+<div class="row my-exam-details my-5" *ngIf="examDetails">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4 class="card-title"> {{ examDetails.name }} Result</h4>
+                <p>Total number of questions: <strong>{{ userExamDetails.length }} questions</strong></p>
+                <p>Correct answers: <strong>{{ totalCorrectAnswers }} correct answer</strong></p>
+                <p>Wrong answers: <strong class="text-danger">{{ totalWrongAnswers }} wrong answer</strong></p>
+                <h4>Your result is <strong>{{ userMarks }} / {{ fullMark }}</strong></h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card mb-3" *ngFor="let userExamDetail of userExamDetails">
+            <div class="card-body">
+                <h4 class="card-title">{{userExamDetail.question.questionName}}</h4>
+                <p *ngFor="let option of userExamDetail.options">
+                    {{ option.optionName }}
+                    <span class="badge badge-success" *ngIf="option.isCorrect">
+                        correct answer
+                    </span>
+                    <span class="badge badge-success ml-2" *ngIf="option.id == userExamDetail.optionSelected.id && option.isCorrect">
+                        you select the correct answer
+                    </span>
+                    <span class="badge badge-danger" *ngIf="option.id == userExamDetail.optionSelected.id && !option.isCorrect">
+                        you select the wrong answer
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

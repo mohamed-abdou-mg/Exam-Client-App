@@ -1,0 +1,16 @@
+<div class="row details-area my-5" *ngIf="option">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ option.optionName }}</h1>
+                <p class="paragraph">{{ (option.isCorrect) ? 'Correct Answer' : 'Wrong Answer' }}</p>
+                <hr>
+                <p class="sub-paragraph">{{ option.createdAt | date }}</p>
+                <div class="btn-group btn-block">
+                    <button class="btn btn-info" [routerLink]="['/manage/options']"><i class="fa fa-eye"></i> Show Options</button>
+                    <button class="btn btn-primary" [routerLink]="['/manage/options/modify-option']" [queryParams]="{ option: option.id }"><i class="fa fa-pen-to-square"></i> Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

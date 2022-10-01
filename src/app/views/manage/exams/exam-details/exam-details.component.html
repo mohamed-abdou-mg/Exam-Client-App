@@ -1,0 +1,38 @@
+<div class="details-area" *ngIf="exam">
+    <div class="row my-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{ exam.name }}</h1>
+                    <p class="sub-paragraph"><i class="fa fa-clock mr-1"></i> {{ exam.duration }} minutes</p>
+                    <p class="sub-paragraph">{{ exam.shortDescription }}</p>
+                    <hr>
+                    <p class="paragraph" [innerHtml]="exam.description"></p>
+                    <hr>
+                    <p class="sub-paragraph">{{ exam.createdAt | date }}</p>
+                    <div class="btn-group btn-block">
+                        <button class="btn btn-info" [routerLink]="['/manage/exams']"><i class="fa fa-eye"></i> Show Exams</button>
+                        <button class="btn btn-primary" [routerLink]="['/manage/exams/modify-exam']" [queryParams]="{ examId: exam.id }"><i class="fa fa-pen-to-square"></i> Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr>
+    <div class="row mb-5" *ngIf="questions && questions.length > 0">
+        <h2 class="text-muted mb-3">Questions</h2>
+        <div class="col-md-4" *ngFor="let question of questions">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="title">{{ question.questionName }}
+                        <button class="btn btn-link" [routerLink]="['/manage/questions/', question.id]"><i class="fa fa-info"></i> Details</button>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<ng-container *ngIf="questions && questions.length == 0">
+    <h3 class="text-center my-5">There are no questions for this exam <a [routerLink]="['/manage/questions/modify-question']">Create new question</a></h3>
+</ng-container>

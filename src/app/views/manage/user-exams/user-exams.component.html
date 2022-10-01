@@ -1,0 +1,40 @@
+<div class="manage-area my-3" *ngIf="userExams && userExams.length > 0">
+    <div class="row header">
+        <div class="col-md-6">
+            <h2 class="main-head">Manage User Exams</h2>
+        </div>
+    </div>
+    <hr>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Id</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Exam Id</th>
+                <th>Exam</th>
+                <th>Created at</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userExam of userExams">
+                <td>{{ userExam.id }}</td>
+                <td>{{ userExam.appUser.id }}</td>
+                <td>{{ userExam.appUser.firstName }} {{ userExam.appUser.surName }}</td>
+                <td>{{ userExam.appUser.email }}</td>
+                <td>{{ userExam.exam.id }}</td>
+                <td>{{ userExam.exam.name }}</td>
+                <td> {{ userExam.createdAt | date }} </td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteUserExam(userExam.id)"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-container *ngIf="userExams && userExams.length == 0">
+    <app-no-content [contentName]="'userExams'"></app-no-content>
+</ng-container>

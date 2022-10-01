@@ -1,0 +1,36 @@
+<div class="row justify-content-center auth my-5">
+    <div class="col-md-6">
+        <div class="validiation">
+            <div class="client-errors" *ngIf="registerForm.invalid && registerForm.touched">
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('username', 'required')">Username is required</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('username', 'maxlength')">Username max length is 16</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('username', 'minlength')">Username min length is 8</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('email', 'required')">Email address is required</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('email', 'email')">Invalid email address</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('passwordHash', 'required')">Password is required</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('passwordHash', 'maxlength')">Password max length is 16</p>
+                <p class="badge badge-pill badge-danger mx-2 p-3" role="alert" *ngIf="hasError('passwordHash', 'minlength')">Password min length is 8</p>
+            </div>
+        </div>
+        <div class="card auth">
+            <div class="card-body">
+                <h3 class="text-muted mb-4">Register</h3>
+                <form (ngSubmit)="registerForm.valid && registerFormSubmitted()" [formGroup]="registerForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" formControlName="username" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" formControlName="email" role="presentation" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordHash">Password</label>
+                        <input type="password" class="form-control" name="passwordHash" id="passwordHash" formControlName="passwordHash" autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="details-area my-5" *ngIf="totalQuestions > 0">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">{{ examDetails.name }}</h1>
+      <p class="sub-paragraph">{{ examDetails.shortDescription }}</p>
+      <hr class="my-4">
+      <p class="paragraph">{{ examDetails.description }}</p>
+      <p class="sub-paragraph">Total number of questions: {{ totalQuestions }}</p>
+      <p class="sub-paragraph">Final mark: {{ finalMark }}</p>
+      <p class="sub-paragraph">Duration: {{ examDetails.duration }} minutes</p>
+      <button class="btn btn-primary start btn-block" [hidden]="startBtn" (click)="userTakeExam(examDetails.id)">Start exam</button>
+      <p [hidden]="!startBtn" class="badge badge-pill badge-info p-3">You can not take this exam now, may be because there are some questions without options</p>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="totalQuestions == 0">
+  <div class="jumbotron no-content my-5 text-center">
+    <h1 class="display-4 my-5">There are no questions for this exam.</h1>
+  </div>
+</ng-container>

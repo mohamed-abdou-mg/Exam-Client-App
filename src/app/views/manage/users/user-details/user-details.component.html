@@ -1,0 +1,21 @@
+<div class="details-area">
+    <div class="row my-5" *ngIf="user">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{ user.username }}</h1>
+                    <p class="sub-paragraph">Email: {{ user.email }}</p>
+                    <p class="sub-paragraph">First Name: {{ user.firstName }}</p>
+                    <p class="sub-paragraph">Last Name: {{ user.surName }}</p>
+                    <p class="sub-paragraph">Job Title: {{ user.jobTitle }}</p>
+                    <p class="sub-paragraph">Roles: {{ user.roleName}}</p>
+                    <hr>
+                    <div class="btn-group btn-block">
+                        <button class="btn btn-info" [routerLink]="['/manage/users']"><i class="fa fa-eye"></i> Show Users</button>
+                        <button class="btn btn-primary" [routerLink]="['/manage/users/modify-user']" [queryParams]="{ userId: user.id }"><i class="fa fa-pen-to-square"></i> Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

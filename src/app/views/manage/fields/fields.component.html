@@ -1,0 +1,58 @@
+<ng-container>
+    <div class="row mt-2 mb-3">
+        <div class="col-md-3">
+            <app-export-excel [btnValue]="'Export fields to excel'" [exportList]="fields"></app-export-excel>
+        </div>
+        <div class="col-md-5">
+            <app-import-excel (fileList) = "fileListImported($event)"></app-import-excel>
+            <button class="btn btn-upload-excel btn-success" [hidden]="uploadBtnStatus" type="button" (click)="uploadFile()">Upload</button>
+        </div>
+        <div class="col-md-4">
+            <app-export-excel [btnValue]="'Download required template for upload'" [exportList]="fieldTemplate"></app-export-excel>
+        </div>
+    </div>
+</ng-container>
+<hr>
+
+<div class="manage-area" *ngIf="fields && fields.length > 0">
+    <div class="row header">
+        <div class="col-md-6">
+            <h2 class="main-head">Manage Fields</h2>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary float-right" [routerLink]="['/manage/fields/modify-field']"><i class="fa fa-plus"></i> Add Fields</button>
+        </div>
+    </div>
+    <hr>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Short description</th>
+                <th>Description</th>
+                <th>Exams</th>
+                <th>Created at</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let field of fields">
+                <td>{{ field.id }}</td>
+                <td>{{ (field.name.length > 20) ? field.name.substring(0, 20) + '...' : field.name }}</td>
+                <td>{{ (field.shortDescription.length > 20) ? field.shortDescription.substring(0, 20) + '...' : field.shortDescription }}</td>
+                <td>{{ (field.description.length > 20) ? field.description.substring(0, 20) + '...' : field.description }}</td>
+                <td>{{ (field.fieldExams).length }}</td>
+                <td> {{ field.createdAt | date }} </td>
+                <td>
+                    <button class="btn btn-info mr-2" [routerLink]="['/manage/fields/' + field.id]"><i class="fa fa-info"></i> Details</button>
+                    <button class="btn btn-danger" (click)="deleteField(field.id)"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-container *ngIf="fields && fields.length == 0">
+    <app-no-content [contentName]="'fields'" [url]="'/manage/fields/modify-field'" ></app-no-content>
+</ng-container>

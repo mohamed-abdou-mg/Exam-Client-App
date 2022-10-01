@@ -1,0 +1,37 @@
+<div class="modify-content my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <ng-container>
+                <div class="validiation">
+                    <div class="client-errors" *ngIf="modifyFormGroup.invalid && modifyFormGroup.touched">
+                        <p class="badge badge-danger badge-pill p-3 mx-2" *ngIf="hasError('name', 'required')">name is required</p>
+                        <p class="badge badge-danger badge-pill p-3 mx-2" *ngIf="hasError('shortDescription', 'required')">shortDescription is required</p>
+                        <p class="badge badge-danger badge-pill p-3 mx-2" *ngIf="hasError('description', 'required')">description is required</p>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{(fieldId && fieldId != 0) ? 'Update' : 'Create'}} field</h3>
+                    <form [formGroup]="modifyFormGroup" (ngSubmit)="modifyFormGroup.valid && modifyFormSubmitted()">
+                        <div class="form-group">
+                            <label for="name">Field Name</label>
+                            <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="shortDescription">Short Description</label>
+                            <textarea id="shortDescription" class="form-control" formControlName="shortDescription" cols="30" rows="3" autocomplete="off"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" class="form-control" formControlName="description" cols="30" rows="3" autocomplete="off"></textarea>
+                        </div>
+                        <button class="btn btn-block btn-primary" [disabled]="modifyFormGroup.invalid">Modify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="row my-5 exam-content" *ngIf="exams && exams.length > 0">
+    <div class="col-md-4" *ngFor="let exam of exams">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">{{ exam.name }}</h3>
+                <p class="sub-paragraph">{{ exam.duration }} minutes</p>
+                <p class="paragraph">{{ (exam.shortDescription.length > 30) ? exam.shortDescription.substring(0,30) + '...' : exam.shortDescription }}</p>
+                <div class="btn-group btn-block mt-3">
+                    <button class="btn btn-info" [routerLink]="['/exams-content/exam-details/', exam.id]"><i class="fa fa-info"></i> Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="exams && exams.length == 0">
+    <div class="jumbotron no-content my-5 text-center">
+        <h1 class="display-4 my-5">There are no any exams available yet</h1>
+    </div>
+</ng-container>

@@ -1,0 +1,33 @@
+<div class="details-area">
+    <div class="row my-5" *ngIf="question">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{ question.questionName }}</h1>
+                    <p class="paragraph">Marks: {{ question.degree }} Degree</p>
+                    <hr>
+                    <p class="sub-paragraph">{{ question.createdAt | date }}</p>
+                    <div class="btn-group btn-block">
+                        <button class="btn btn-info" [routerLink]="['/manage/questions']"><i class="fa fa-eye"></i> Show Questions</button>
+                        <button class="btn btn-primary" [routerLink]="['/manage/questions/modify-question']" [queryParams]="{ question: question.id }"><i class="fa fa-pen-to-square"></i> Edit</button>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row mb-5" *ngIf="options && options.length > 0">
+        <h2 class="text-muted mb-3">Options</h2>
+        <div class="col-md-4" *ngFor="let option of options">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="title">{{ option.optionName }} <button class="btn btn-link" [routerLink]="['/manage/options/', option.id]"><i class="fa fa-info"></i> Show Details</button></h6>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<ng-container *ngIf="options && options.length == 0">
+    <h3 class="text-center my-5">There are no options for this field yet <a [routerLink]="['/manage/options/modify-option']">create new option</a></h3>
+</ng-container>

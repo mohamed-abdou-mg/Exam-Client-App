@@ -1,0 +1,92 @@
+<div class="exam-creation">
+    <h2 class="main-head">Full Exam Creation</h2>
+    <ng-container>
+        <div class="validation">
+            <alert type="warning" [dismissible]="true" *ngIf="fields && fields.length == 0">
+                Note: there are no fields added yet. you can add exams without fields it is not necessary
+                <a [routerLink]="['/manage/fields/modify-field']" class="text-danger">click to add</a>
+            </alert>
+            <alert *ngIf="examCreation.invalid" type="danger" [dismissible]="true">All fields are required</alert>
+        </div>
+    </ng-container>
+
+    <form [formGroup]="examCreation" novalidate (ngSubmit)="examCreation.valid && examCreationSubmitted(examCreation)">
+        <div formArrayName="exams">
+            <div class="row my-5">
+                <!-- Exam Creation -->
+                <div class="col-md-6">
+                    <!-- Exam Details Section -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="examName">Exam Name</label>
+                                <input type="text" id="examName" class="form-control" formControlName="examName" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="examShortDescription">Exam Short Description</label>
+                                <textarea id="examShortDescription" class="form-control" formControlName="examShortDescription" cols="30" rows="3" autocomplete="off"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="examDescription">Exam Description</label>
+                                <textarea id="examDescription" class="form-control" formControlName="examDescription" cols="30" rows="3" autocomplete="off"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="examDuration">Exam Duration</label>
+                                <input type="number" placeholder="By Minutes" id="examDuration" class="form-control" formControlName="examDuration" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label>Fields</label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Fields'"
+                                [data]="fields"
+                                formControlName="fieldExams"
+                                [settings]="dropdownSettings"
+                                >
+                                </ng-multiselect-dropdown>    
+                            </div>
+                            <button class="btn btn-success btn-block" type="submit" [disabled]="examCreation.invalid">Create a full exam</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Questions & Options Details Section -->
+                    <accordion [closeOthers]="true" [isAnimated]="true">
+                        <div class="question-container" formArrayName="questions">
+                            <div [formGroupName]="j" *ngFor="let question of getQuestions(); let j = index">
+                                <accordion-group>
+                                    <button class="btn btn-link btn-block justify-content-between d-flex w-100  shadow-none" accordion-heading type="button">
+                                        <div class="panel-question-title mt-2 pull-left float-left">Question Number {{ j + 1 }}</div>
+                                        <button type="button" class="btn btn-danger float-right pull-right" *ngIf="getQuestions().length > 1" (click)="removeQuestion(j)"><i class="fa fa-xmark"></i></button>
+                                    </button>
+                                    <input type="text" class="form-control mb-3" placeholder="Question" formControlName="questionName" autocomplete="off">
+                                    <input type="number" class="form-control mb-3" placeholder="Question Degree" formControlName="questionDegree" autocomplete="off">
+    
+                                    <button type="button" class="btn btn-primary mb-2 mr-2 btn-block" (click)="add(j)">Add New Option</button>
+                                
+                                    <!-- Option Addation -->
+                                    <div formArrayName="options">
+                                        <div [formGroupName]="k" *ngFor="let option of getOptions(question); let k=index">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control my-2" [placeholder]="'Option' + (k+1)" formControlName="optionName" autocomplete="off">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-check form-check-inline" style="margin-top: 12px;">
+                                                        <input class="form-check-input" [checked]="examCreation.value.exams.questions[j].options[k].optionIsCorrect" (click)="isCorrectChecked(j, k)" type="checkbox" formControlName="optionIsCorrect" [id]="'isCorrect' + j + k">
+                                                        <label class="form-check-label" [for]="'isCorrect' + j + k"><i class="fa fa-check"></i></label>
+                                                        <i style="cursor: pointer; margin-left:5px" *ngIf="getOptions(question).length > 1" (click)="removeOption(j,k)" class="fa fa-xmark"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                            
+                                    </div>                     
+                                </accordion-group>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-block mt-3" (click)="addQuestion()">New Question</button>
+                        </div>
+                    </accordion>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

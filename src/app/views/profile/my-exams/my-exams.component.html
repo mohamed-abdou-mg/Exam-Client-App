@@ -1,0 +1,20 @@
+<div class="row my-exams" *ngIf="authUserExams && authUserExams.length > 0">
+    <div class="col-md-4" *ngFor="let authUserExam of authUserExams">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h3 class="card-title">{{ authUserExam.exam.name }}</h3>
+                <p class="paragraph">{{ authUserExam.createdAt | date:'dd-MM-yyyy hh:mm:ss' }}</p>
+                <div class="btn-group btn-block mt-3">
+                    <button class="btn btn-info" [routerLink]="['/profile/my-exams/', authUserExam.id]"><i class="fa fa-info"></i> Details</button>
+                    <button class="btn btn-danger" (click)="deleteMyExam(authUserExam.id)"><i class="fa fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<ng-container *ngIf="authUserExams && authUserExams.length == 0">
+    <div class="jumbotron no-content my-5 text-center">
+        <h1 class="display-4 my-5">You don't take any exam yet</h1>
+    </div>
+</ng-container>

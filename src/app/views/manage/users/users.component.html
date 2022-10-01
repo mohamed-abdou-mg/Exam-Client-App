@@ -1,0 +1,35 @@
+<div class="manage-area my-3" *ngIf="users && users.length > 0">
+    <div class="row header">
+        <div class="col-md-6">
+            <h2 class="main-head">Manage Users</h2>
+        </div>
+    </div>
+    <hr>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role Name</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roleName }}</td>
+                <td>
+                    <button class="btn btn-info mr-2" [routerLink]="['/manage/users/' + user.id]"><i class="fa fa-info"></i> Details</button>
+                    <button class="btn btn-danger" (click)="deleteUser(user.id)"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-container *ngIf="users && users.length == 0">
+    <app-no-content [contentName]="'users'" [url]="'/manage/users/modify-user'" ></app-no-content>
+</ng-container>

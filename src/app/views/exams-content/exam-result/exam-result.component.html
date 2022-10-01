@@ -1,0 +1,34 @@
+<div class="row mt-5 exam-result">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h3 class="card-title"> {{ exam.name }} Result</h3>
+                <p>Total number of questions: <strong>{{ examImplementation.length }} questions</strong></p>
+                <p>Correct answers: <strong>{{ totalCorrectAnswers }} correct answer</strong></p>
+                <p>Wrong answers: <strong class="text-danger">{{ totalWrongAnswers }} wrong answer</strong></p>
+                <h4>Your result is <strong>{{ userMarks }} / {{ fullMark }}</strong></h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <accordion [isAnimated]="true" [closeOthers]="true">
+            <accordion-group *ngFor="let exam of examImplementation; let i = index" [heading]="'Question ' + (i+1)">
+                <h4>{{ exam.question.questionName }}</h4>
+                <ng-container *ngFor="let option of exam.options">
+                    <p class="options">
+                        {{ option.optionName }}
+                        <span class="badge badge-success" *ngIf="option.isCorrect">
+                            correct answer
+                        </span>
+                        <span class="badge badge-success ml-2" *ngIf="option.id == exam.optionSelected.id && option.isCorrect">
+                            you select the correct answer
+                        </span>
+                        <span class="badge badge-danger" *ngIf="option.id == exam.optionSelected.id && !option.isCorrect">
+                            you select the wrong answer
+                        </span>
+                    </p>
+                </ng-container>
+            </accordion-group>
+        </accordion>
+    </div>
+</div>
